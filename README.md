@@ -36,5 +36,4 @@ pytest -q
 
 ## Docker
 
-The repository includes a `Dockerfile` and `docker-compose.yml` for running the app against a ChromaDB service.
-
+The repository includes a `Dockerfile` for the Python app and a `docker-compose.yml` that runs ChromaDB only.
