@@ -13,7 +13,7 @@ def main() -> None:
     print("PHASE 1 & 2: ROUTING & ORIGINAL POST GENERATION".center(80))
     print("=" * 80)
 
-    input_trigger = "please no more slop, do not read out the plan file , read out the code that is better."
+    input_trigger = "OpenAI just released a new model that might replace junior developers."
     print(f"\n[INPUT TRIGGER]: {input_trigger}\n")
 
     pipeline_result = run_full_pipeline(input_trigger)
