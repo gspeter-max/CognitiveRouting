@@ -17,6 +17,7 @@ def main() -> None:
 
     print(f"Post: {post}")
     print("Matches:")
+    print(f"matches: {matches}")
     for match in matches:
         print(f"- {match['bot_id']} | {match['bot_name']} | {match['similarity']}")
 
