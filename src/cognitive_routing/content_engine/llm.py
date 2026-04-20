@@ -35,23 +35,15 @@ def build_mistral_client(api_key: str | None = None) -> Mistral:
 def decide_search_for_persona(client: Mistral, bot_id: str, persona: str) -> SearchDecision:
     """Select one topical angle and one search query for the persona."""
 
+    from cognitive_routing.prompts.engine_prompts import get_search_decision_prompt
+
+    messages = get_search_decision_prompt(bot_id, persona)
+
     response = client.chat.parse(
         model=DEFAULT_MISTRAL_MODEL,
         response_format=SearchDecision,
         temperature=DEFAULT_TOPIC_TEMPERATURE,
-        messages=[
-            {
-                "role": "system",
-                "content": (
-                    "Select one current topic for a social bot persona. "
-                    "Return only structured fields for topic and search_query."
-                ),
-            },
-            {
-                "role": "user",
-                "content": f"bot_id={bot_id}\npersona={persona}",
-            },
-        ],
+        messages=messages, # type: ignore
     )
     return response.choices[0].message.parsed
 
@@ -65,27 +57,20 @@ def draft_post_from_context(
 ) -> GeneratedPost:
     """Draft the final structured social post from persona and mock-search context."""
 
+    from cognitive_routing.prompts.engine_prompts import get_draft_post_prompt
+
+    messages = get_draft_post_prompt(
+        bot_id=bot_id,
+        persona=persona,
+        topic=topic,
+        search_results=search_results,
+        char_limit=CONTENT_POST_CHAR_LIMIT,
+    )
+
     response = client.chat.parse(
         model=DEFAULT_MISTRAL_MODEL,
         response_format=GeneratedPost,
         temperature=DEFAULT_POST_TEMPERATURE,
-        messages=[
-            {
-                "role": "system",
-                "content": (
-                    "Write one opinionated social post in the provided persona. "
-                    f"Keep post_content under {CONTENT_POST_CHAR_LIMIT} characters."
-                ),
-            },
-            {
-                "role": "user",
-                "content": (
-                    f"bot_id={bot_id}\n"
-                    f"persona={persona}\n"
-                    f"topic={topic}\n"
-                    f"search_results={search_results}"
-                ),
-            },
-        ],
+        messages=messages, # type: ignore
     )
     return response.choices[0].message.parsed
