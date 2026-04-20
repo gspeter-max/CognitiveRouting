@@ -47,6 +47,7 @@ def test_draft_post_from_context_returns_generated_post():
 
 
 def test_build_mistral_client_requires_api_key(monkeypatch):
-    monkeypatch.delenv("MISTRAL_API_KEY", raising=False)
+    # Mock the module-level constant to simulate missing API key
+    monkeypatch.setattr("cognitive_routing.content_engine.llm.MISTRAL_API_KEY", "")
     with pytest.raises(ValueError):
         build_mistral_client()

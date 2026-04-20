@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Any
 
 from cognitive_routing.config import DEFAULT_THRESHOLD
+from cognitive_routing.content_engine.combat import generate_defense_reply
 from cognitive_routing.content_engine.graph import generate_original_post
 from cognitive_routing.routing.personas import Persona, load_personas
 from cognitive_routing.routing.router import route_post_to_bots

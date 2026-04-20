@@ -10,12 +10,12 @@ from cognitive_routing.config import (
     DEFAULT_MISTRAL_MODEL,
     DEFAULT_POST_TEMPERATURE,
     DEFAULT_TOPIC_TEMPERATURE,
-    MISTRAL_API_KEY_ENV,
+    MISTRAL_API_KEY,
 )
 from cognitive_routing.content_engine.models import GeneratedPost, SearchDecision
 
 if TYPE_CHECKING:
-    from mistralai import Mistral
+    from mistralai.client import Mistral
 else:
     Mistral = Any
 
@@ -23,11 +23,11 @@ else:
 def build_mistral_client(api_key: str | None = None) -> Mistral:
     """Build the official Mistral client from an explicit or environment API key."""
 
-    resolved_key = api_key or os.getenv(MISTRAL_API_KEY_ENV)
+    resolved_key = api_key or MISTRAL_API_KEY
     if not resolved_key:
-        raise ValueError(f"{MISTRAL_API_KEY_ENV} is required for Phase 2 content generation.")
+        raise ValueError("MISTRAL_API_KEY is required for Phase 2 content generation.")
 
-    from mistralai import Mistral as MistralClient
+    from mistralai.client import Mistral as MistralClient
 
     return MistralClient(api_key=resolved_key)
 

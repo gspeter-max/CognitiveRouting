@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any
 from cognitive_routing.content_engine.llm import build_mistral_client
 
 if TYPE_CHECKING:
-    from mistralai import Mistral
+    from mistralai.client import Mistral
     from cognitive_routing.content_engine.models import ThreadMessage
 
 
