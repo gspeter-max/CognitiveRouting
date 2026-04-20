@@ -37,3 +37,10 @@ class ContentGraphState(TypedDict, total=False):
     search_query: str
     search_results: str
     post_content: str
+
+
+class ThreadMessage(TypedDict):
+    """Represents a single message in a back-and-forth thread."""
+
+    author: str
+    content: str

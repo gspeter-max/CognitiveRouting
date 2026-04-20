@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: cognitive-routing
+Version: 0.1.0
+Summary: Phase 1 persona router for Grid07
+Requires-Python: >=3.11
+Requires-Dist: chromadb>=0.5.0
+Requires-Dist: sentence-transformers>=3.0.0
+Requires-Dist: numpy>=1.26.0
+Requires-Dist: langgraph>=0.2.0
+Requires-Dist: langchain-core>=0.3.0
+Requires-Dist: mistralai>=1.0.0
+Requires-Dist: pydantic>=2.7.0
+Requires-Dist: pytest>=9.0.3
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0.0; extra == "dev"

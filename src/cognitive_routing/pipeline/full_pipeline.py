@@ -65,3 +65,41 @@ def _get_persona_by_id(personas: list[Persona], bot_id: str) -> Persona:
         if persona.bot_id == bot_id:
             return persona
     raise ValueError(f"Phase 1 selected unknown bot_id: {bot_id}")
+
+
+def run_combat_pipeline(
+    bot_id: str,
+    parent_post: str,
+    comment_history: list[dict[str, str]],
+    human_reply: str,
+    *,
+    chroma_client: Any | None = None,
+    mistral_client: Any | None = None,
+) -> dict[str, Any]:
+    """Run the Phase 3 combat pipeline for an existing thread.
+    
+    This dynamically fetches the persona context for the provided bot_id
+    and delegates the generation of the defense reply.
+    """
+    # Fetch the precise persona description
+    personas = load_personas()
+    try:
+        selected_persona = _get_persona_by_id(personas, bot_id)
+    except ValueError:
+        raise ValueError(f"Cannot run combat pipeline for unknown bot_id: {bot_id}")
+        
+    reply = generate_defense_reply(
+        bot_persona=selected_persona.description,
+        parent_post=parent_post,
+        comment_history=comment_history, # type: ignore
+        human_reply=human_reply,
+        client=mistral_client,
+    )
+    
+    return {
+        "bot_id": bot_id,
+        "bot_name": selected_persona.bot_name,
+        "parent_post": parent_post,
+        "human_reply": human_reply,
+        "defense_reply": reply,
+    }

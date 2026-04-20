@@ -1,4 +1,4 @@
-from cognitive_routing import embeddings
+from cognitive_routing.routing import embeddings
 
 
 def test_embed_text_returns_non_empty_vector(monkeypatch):
