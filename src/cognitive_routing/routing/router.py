@@ -5,8 +5,8 @@ from __future__ import annotations
 from typing import Any
 
 from cognitive_routing.config import DEFAULT_THRESHOLD
-from cognitive_routing.embeddings import embed_text
-from cognitive_routing.store import query_personas
+from cognitive_routing.routing.embeddings import embed_text
+from cognitive_routing.routing.store import query_personas
 
 
 def route_post_to_bots(collection: Any, post_content: str, threshold: float = DEFAULT_THRESHOLD) -> list[dict[str, Any]]:
@@ -22,9 +22,7 @@ def route_post_to_bots(collection: Any, post_content: str, threshold: float = DE
 
     for index, bot_id in enumerate(ids):
         distance = distances[index]
-        # Chroma returns cosine distance; similarity is the inverse score.
         similarity = 1.0 - distance
-        print(f"distance: {distance} | bot_id: {bot_id} | metadatas: {metadatas[index]} | similarity: {similarity} | threshold: {threshold}")
         if similarity < threshold:
             continue
 

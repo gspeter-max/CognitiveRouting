@@ -1,9 +1,9 @@
-from cognitive_routing.personas import load_personas
-from cognitive_routing.store import get_chroma_client, get_persona_collection, query_personas, seed_personas
+from cognitive_routing.routing.personas import load_personas
+from cognitive_routing.routing.store import get_chroma_client, get_persona_collection, query_personas, seed_personas
 
 
 def test_seed_personas_creates_three_records(tmp_path, monkeypatch):
-    monkeypatch.setattr("cognitive_routing.store.embed_text", lambda text: [0.1, 0.2, 0.3])
+    monkeypatch.setattr("cognitive_routing.routing.store.embed_text", lambda text: [0.1, 0.2, 0.3])
 
     client = get_chroma_client(str(tmp_path / "chroma"))
     collection = get_persona_collection(client)
@@ -17,7 +17,7 @@ def test_seed_personas_creates_three_records(tmp_path, monkeypatch):
 
 
 def test_query_personas_returns_distances(tmp_path, monkeypatch):
-    monkeypatch.setattr("cognitive_routing.store.embed_text", lambda text: [0.1, 0.2, 0.3])
+    monkeypatch.setattr("cognitive_routing.routing.store.embed_text", lambda text: [0.1, 0.2, 0.3])
 
     client = get_chroma_client(str(tmp_path / "chroma"))
     collection = get_persona_collection(client)
@@ -36,7 +36,7 @@ def test_seed_personas_noops_on_empty_input(tmp_path, monkeypatch):
         called["embed"] = True
         return [0.1, 0.2, 0.3]
 
-    monkeypatch.setattr("cognitive_routing.store.embed_text", fake_embed)
+    monkeypatch.setattr("cognitive_routing.routing.store.embed_text", fake_embed)
 
     client = get_chroma_client(str(tmp_path / "chroma"))
     collection = get_persona_collection(client)
@@ -89,7 +89,7 @@ def test_get_chroma_client_uses_http_client_when_env_is_set(monkeypatch):
             return "http-client"
 
     monkeypatch.setenv("CHROMA_HOST", "https://example.com:8443")
-    monkeypatch.setattr("cognitive_routing.store.chromadb.HttpClient", FakeHttpClient())
+    monkeypatch.setattr("cognitive_routing.routing.store.chromadb.HttpClient", FakeHttpClient())
 
     client = get_chroma_client()
 
@@ -106,7 +106,7 @@ def test_get_chroma_client_uses_persistent_client_when_no_env(tmp_path, monkeypa
             return "persistent-client"
 
     monkeypatch.delenv("CHROMA_HOST", raising=False)
-    monkeypatch.setattr("cognitive_routing.store.chromadb.PersistentClient", FakePersistentClient())
+    monkeypatch.setattr("cognitive_routing.routing.store.chromadb.PersistentClient", FakePersistentClient())
 
     client = get_chroma_client(str(tmp_path / "persist"))
 

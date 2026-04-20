@@ -1,11 +1,11 @@
-from cognitive_routing.personas import load_personas
-from cognitive_routing.router import route_post_to_bots
-from cognitive_routing.store import get_chroma_client, get_persona_collection, seed_personas
+from cognitive_routing.routing.personas import load_personas
+from cognitive_routing.routing.router import route_post_to_bots
+from cognitive_routing.routing.store import get_chroma_client, get_persona_collection, seed_personas
 
 
 def test_route_post_to_bots_returns_matching_bots(tmp_path, monkeypatch):
-    monkeypatch.setattr("cognitive_routing.store.embed_text", lambda text: [0.1, 0.2, 0.3])
-    monkeypatch.setattr("cognitive_routing.router.embed_text", lambda text: [0.1, 0.2, 0.3])
+    monkeypatch.setattr("cognitive_routing.routing.store.embed_text", lambda text: [0.1, 0.2, 0.3])
+    monkeypatch.setattr("cognitive_routing.routing.router.embed_text", lambda text: [0.1, 0.2, 0.3])
 
     client = get_chroma_client(str(tmp_path / "chroma"))
     collection = get_persona_collection(client)
@@ -23,8 +23,8 @@ def test_route_post_to_bots_returns_matching_bots(tmp_path, monkeypatch):
 
 
 def test_route_post_to_bots_filters_below_threshold(tmp_path, monkeypatch):
-    monkeypatch.setattr("cognitive_routing.store.embed_text", lambda text: [0.1, 0.2, 0.3])
-    monkeypatch.setattr("cognitive_routing.router.embed_text", lambda text: [0.1, 0.2, 0.3])
+    monkeypatch.setattr("cognitive_routing.routing.store.embed_text", lambda text: [0.1, 0.2, 0.3])
+    monkeypatch.setattr("cognitive_routing.routing.router.embed_text", lambda text: [0.1, 0.2, 0.3])
 
     client = get_chroma_client(str(tmp_path / "chroma"))
     collection = get_persona_collection(client)
@@ -40,9 +40,9 @@ def test_route_post_to_bots_filters_below_threshold(tmp_path, monkeypatch):
 
 
 def test_route_post_to_bots_includes_score_at_threshold(monkeypatch):
-    monkeypatch.setattr("cognitive_routing.router.embed_text", lambda text: [0.1, 0.2, 0.3])
+    monkeypatch.setattr("cognitive_routing.routing.router.embed_text", lambda text: [0.1, 0.2, 0.3])
     monkeypatch.setattr(
-        "cognitive_routing.router.query_personas",
+        "cognitive_routing.routing.router.query_personas",
         lambda collection, query_embedding, top_k=3: {
             "ids": [["bot_a"]],
             "distances": [[0.15]],
@@ -62,9 +62,9 @@ def test_route_post_to_bots_includes_score_at_threshold(monkeypatch):
 
 
 def test_route_post_to_bots_returns_empty_list_for_empty_query_result(monkeypatch):
-    monkeypatch.setattr("cognitive_routing.router.embed_text", lambda text: [0.1, 0.2, 0.3])
+    monkeypatch.setattr("cognitive_routing.routing.router.embed_text", lambda text: [0.1, 0.2, 0.3])
     monkeypatch.setattr(
-        "cognitive_routing.router.query_personas",
+        "cognitive_routing.routing.router.query_personas",
         lambda collection, query_embedding, top_k=3: {"ids": [[]], "distances": [[]], "metadatas": [[]]},
     )
 
@@ -74,9 +74,9 @@ def test_route_post_to_bots_returns_empty_list_for_empty_query_result(monkeypatc
 
 
 def test_route_post_to_bots_defaults_missing_metadata_to_bot_id(monkeypatch):
-    monkeypatch.setattr("cognitive_routing.router.embed_text", lambda text: [0.1, 0.2, 0.3])
+    monkeypatch.setattr("cognitive_routing.routing.router.embed_text", lambda text: [0.1, 0.2, 0.3])
     monkeypatch.setattr(
-        "cognitive_routing.router.query_personas",
+        "cognitive_routing.routing.router.query_personas",
         lambda collection, query_embedding, top_k=3: {
             "ids": [["bot_x"]],
             "distances": [[0.0]],

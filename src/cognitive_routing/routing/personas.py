@@ -1,4 +1,4 @@
-"""Fixed persona records used by the Phase 1 router."""
+"""Canonical persona definitions for the Phase 1 routing workflow."""
 
 from dataclasses import dataclass
 
@@ -14,7 +14,7 @@ class Persona:
 
 
 def load_personas() -> list[Persona]:
-    """Return the canonical set of Phase 1 personas in a stable order."""
+    """Return the canonical set of routing personas in a stable order."""
 
     return [
         Persona(

@@ -1,4 +1,4 @@
-"""Embedding helpers for persona and post text."""
+"""Embedding helpers for Phase 1 persona routing."""
 
 from functools import lru_cache
 
@@ -16,7 +16,7 @@ def get_embedding_model() -> SentenceTransformer:
 
 
 def _to_list(vector: np.ndarray | list[float]) -> list[float]:
-    """Convert NumPy arrays or Python sequences into a plain list of floats."""
+    """Convert NumPy arrays or Python sequences into plain float lists."""
 
     if isinstance(vector, np.ndarray):
         return vector.tolist()
@@ -36,7 +36,7 @@ def embed_text(text: str) -> list[float]:
 
 
 def embed_texts(texts: list[str]) -> list[list[float]]:
-    """Embed many texts in one batch, preserving input order."""
+    """Embed many texts in one batch while preserving input order."""
 
     if not texts:
         return []

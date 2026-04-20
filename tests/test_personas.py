@@ -2,7 +2,7 @@ from dataclasses import FrozenInstanceError
 
 import pytest
 
-from cognitive_routing.personas import Persona, load_personas
+from cognitive_routing.routing.personas import Persona, load_personas
 
 
 def test_load_personas_returns_three_stable_personas():

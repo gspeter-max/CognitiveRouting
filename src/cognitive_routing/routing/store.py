@@ -1,25 +1,21 @@
-"""ChromaDB persistence and query helpers for persona routing."""
+"""Persistence helpers for Phase 1 persona routing."""
 
 from __future__ import annotations
 
 import os
 from pathlib import Path
-from urllib.parse import urlparse
 from typing import Any
+from urllib.parse import urlparse
 
 import chromadb
 
 from cognitive_routing.config import CHROMA_COLLECTION_NAME, CHROMA_PERSIST_DIR
-from cognitive_routing.embeddings import embed_text
-from cognitive_routing.personas import Persona
+from cognitive_routing.routing.embeddings import embed_text
+from cognitive_routing.routing.personas import Persona
 
 
 def get_chroma_client(path: str = CHROMA_PERSIST_DIR) -> Any:
-    """Return a Chroma client backed by HTTP or local persistence.
-
-    If ``CHROMA_HOST`` is set, the app connects to a remote Chroma server.
-    Otherwise it falls back to a local on-disk PersistentClient.
-    """
+    """Return a Chroma client backed by HTTP or local persistence."""
 
     chroma_host = os.getenv("CHROMA_HOST")
     if chroma_host:
@@ -35,7 +31,7 @@ def get_chroma_client(path: str = CHROMA_PERSIST_DIR) -> Any:
 
 
 def get_persona_collection(client: Any) -> Any:
-    """Create or open the router's collection using cosine distance."""
+    """Create or open the routing collection using cosine distance."""
 
     return client.get_or_create_collection(
         name=CHROMA_COLLECTION_NAME,
@@ -44,7 +40,7 @@ def get_persona_collection(client: Any) -> Any:
 
 
 def seed_personas(collection: Any, personas: list[Persona]) -> None:
-    """Upsert all personas into Chroma using persona descriptions as documents."""
+    """Upsert the canonical personas into Chroma using description embeddings."""
 
     if not personas:
         return
