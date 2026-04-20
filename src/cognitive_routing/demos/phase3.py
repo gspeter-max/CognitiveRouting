@@ -1,7 +1,7 @@
 """Demo showing the Phase 3 Combat Engine defending against prompt injection."""
 
 from cognitive_routing.pipeline.full_pipeline import run_combat_pipeline
-
+from pprint import pprint 
 
 def main() -> None:
     """Execute the Phase 3 'EV Scam' scenario with a prompt injection attempt."""
@@ -42,14 +42,14 @@ def main() -> None:
 
     # Execute through the dynamic pipeline layer
     result = run_combat_pipeline(
-        bot_id=target_bot,
+        bot_id=target_bot,  
         parent_post=parent_post,
         comment_history=comment_history,
         human_reply=human_reply,
     )
 
     print("\n[BOT RESPONSE]")
-    print(result["defense_reply"])
+    pprint(result["defense_reply"])
     print("\n=======================================================\n")
 
 

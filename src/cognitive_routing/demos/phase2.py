@@ -2,7 +2,7 @@
 
 from cognitive_routing.content_engine.graph import generate_original_post
 from cognitive_routing.routing.personas import load_personas
-
+from pprint import pprint 
 
 def main() -> None:
     """Generate one original post for the first canonical persona."""
@@ -10,7 +10,7 @@ def main() -> None:
     persona = load_personas()[0]
     result = generate_original_post(persona.bot_id, persona.description)
     print("Phase 2 result:")
-    print(result)
+    pprint(result, indent=4)
 
 
 if __name__ == "__main__":
