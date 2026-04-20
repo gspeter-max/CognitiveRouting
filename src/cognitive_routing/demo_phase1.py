@@ -1,8 +1,8 @@
 """Console entry point for the Phase 1 router demo."""
 
-from .personas import load_personas
-from .router import route_post_to_bots
-from .store import get_chroma_client, get_persona_collection, seed_personas
+from cognitive_routing.personas import load_personas
+from cognitive_routing.router import route_post_to_bots
+from cognitive_routing.store import get_chroma_client, get_persona_collection, seed_personas
 
 
 def main() -> None:

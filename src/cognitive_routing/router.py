@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from typing import Any
 
-from .config import DEFAULT_THRESHOLD
-from .embeddings import embed_text
-from .store import query_personas
+from cognitive_routing.config import DEFAULT_THRESHOLD
+from cognitive_routing.embeddings import embed_text
+from cognitive_routing.store import query_personas
 
 
 def route_post_to_bots(collection: Any, post_content: str, threshold: float = DEFAULT_THRESHOLD) -> list[dict[str, Any]]:

@@ -5,7 +5,7 @@ from functools import lru_cache
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-from .config import MODEL_NAME
+from cognitive_routing.config import MODEL_NAME
 
 
 @lru_cache(maxsize=1)

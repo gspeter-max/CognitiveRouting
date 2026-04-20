@@ -9,9 +9,9 @@ from typing import Any
 
 import chromadb
 
-from .config import CHROMA_COLLECTION_NAME, CHROMA_PERSIST_DIR
-from .embeddings import embed_text
-from .personas import Persona
+from cognitive_routing.config import CHROMA_COLLECTION_NAME, CHROMA_PERSIST_DIR
+from cognitive_routing.embeddings import embed_text
+from cognitive_routing.personas import Persona
 
 
 def get_chroma_client(path: str = CHROMA_PERSIST_DIR) -> Any:
