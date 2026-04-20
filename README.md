@@ -23,9 +23,12 @@ src/cognitive_routing/
 │   ├── tools.py
 │   ├── llm.py
 │   └── graph.py
+├── pipeline/
+│   └── full_pipeline.py
 ├── demos/
 │   ├── phase1.py
-│   └── phase2.py
+│   ├── phase2.py
+│   └── full_pipeline.py
 ├── demo_phase1.py
 ├── demo_phase2.py
 ```
@@ -84,6 +87,30 @@ Demo:
 python -m cognitive_routing.demos.phase2
 ```
 
+## Full Pipeline
+
+The end-to-end pipeline is now separate from both phases and lives in:
+
+- `cognitive_routing.pipeline.full_pipeline`
+
+Its job is orchestration only:
+
+1. accept the original incoming post
+2. run Phase 1 routing
+3. select the top Phase 1 match
+4. pass that selected bot/persona into Phase 2
+5. return one combined response with routing context plus generated output
+
+This keeps the repo ready for future extension, because Phase 3 can be added to
+the pipeline layer without mixing that logic into `routing/` or
+`content_engine/`.
+
+Demo:
+
+```bash
+python -m cognitive_routing.demos.full_pipeline
+```
+
 ## Environment
 
 Required for Phase 2:
@@ -115,4 +142,5 @@ Suggested commands in your environment:
 pytest -q
 python -m cognitive_routing.demos.phase1
 python -m cognitive_routing.demos.phase2
+python -m cognitive_routing.demos.full_pipeline
 ```

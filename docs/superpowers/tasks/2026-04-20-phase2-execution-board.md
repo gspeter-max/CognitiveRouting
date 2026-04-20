@@ -32,6 +32,9 @@ The public output shape is always:
 }
 ```
 
+The repository now also includes a separate full-pipeline layer that feeds the
+top Phase 1 routing match into Phase 2 generation.
+
 ## Architecture Map
 
 | Module | Responsibility | Notes |
@@ -40,6 +43,7 @@ The public output shape is always:
 | `content_engine/tools.py` | Mock search tool and lookup table | Deterministic, no network access |
 | `content_engine/llm.py` | Only Mistral SDK wrapper in the repo | Structured parsing lives here |
 | `content_engine/graph.py` | LangGraph workflow assembly and public orchestration | Keeps node flow readable |
+| `pipeline/full_pipeline.py` | End-to-end Phase 1 -> Phase 2 orchestration | Uses top routing match as the Phase 2 handoff |
 | `demos/phase2.py` | Manual demo entry point | Produces example console output |
 
 ## Progress Tracker
@@ -79,10 +83,14 @@ src/cognitive_routing/
 │   ├── llm.py
 │   ├── models.py
 │   └── tools.py
+├── pipeline/
+│   ├── __init__.py
+│   └── full_pipeline.py
 ├── demos/
 │   ├── __init__.py
 │   ├── phase1.py
-│   └── phase2.py
+│   ├── phase2.py
+│   └── full_pipeline.py
 ```
 
 ## Working Rules

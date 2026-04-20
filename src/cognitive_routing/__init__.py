@@ -9,6 +9,7 @@ from cognitive_routing.config import (
 )
 from cognitive_routing.content_engine.graph import generate_original_post
 from cognitive_routing.content_engine.models import GeneratedPost, SearchDecision
+from cognitive_routing.pipeline.full_pipeline import run_full_pipeline
 from cognitive_routing.routing.embeddings import embed_text, embed_texts, get_embedding_model
 from cognitive_routing.routing.personas import Persona, load_personas
 from cognitive_routing.routing.router import route_post_to_bots
@@ -23,6 +24,7 @@ __all__ = [
     "GeneratedPost",
     "SearchDecision",
     "generate_original_post",
+    "run_full_pipeline",
     "Persona",
     "embed_text",
     "embed_texts",
