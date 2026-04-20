@@ -24,6 +24,7 @@ def route_post_to_bots(collection: Any, post_content: str, threshold: float = DE
         distance = distances[index]
         # Chroma returns cosine distance; similarity is the inverse score.
         similarity = 1.0 - distance
+        print(f"distance: {distance} | bot_id: {bot_id} | metadatas: {metadatas[index]} | similarity: {similarity} | threshold: {threshold}")
         if similarity < threshold:
             continue
 
